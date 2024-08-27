@@ -1,0 +1,19 @@
+﻿@model ClinicWeb.App_Data.Medicine
+
+@{
+    ViewBag.Title = "Xác nhận xóa thuốc";
+}
+
+<h2>Xác nhận xóa thuốc</h2>
+
+<p>Bạn có chắc chắn muốn xóa thuốc <strong>@Model.name</strong> không?</p>
+
+@using (Html.BeginForm("DeleteMedicineConfirmed", "Admin", new { id = Model.id }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-danger mb-3">Xóa</button>
+        @Html.ActionLink("Hủy", "Medicines", "Admin", null, new { @class = "btn btn-default mb-3" })
+    </div>
+}

@@ -1,0 +1,212 @@
+﻿@{
+    var firstName = Session["firstname"] as string;
+    var avatar = Session["avatar"] as string;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <div class="container-fluid">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Clinic Management System</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Trang chủ</a>
+                </li>
+                @if (Session["user_role"] != null && Session["user_role"].ToString() == "admin")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Doctors">Bác sĩ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Nurses">Y tá</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Medicines">Thuốc</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Services">Dịch vụ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Stats">Thống kê</a>
+                    </li>
+                }
+                @if (Session["user_role"] != null && Session["user_role"].ToString() == "doctor")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Doctor/Appointments">Lịch khám</a>
+                    </li>
+                }
+                @if (Session["user_role"] != null && Session["user_role"].ToString() == "nurse")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Nurse/AddAppointment">Đặt lịch khám</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Nurse/GetListAppointment">Xuất hóa đơn</a>
+                    </li>
+                }
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/About">Về chúng tôi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/Contact">Liên hệ</a>
+                </li>
+                @if (Session["user_details"] == null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/MyAccount/Login">Đăng nhập</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/MyAccount/Logout">Đăng xuất</a>
+                    </li>
+                }
+            </ul>
+            @if (Session["user_details"] != null)
+            {
+                <span>
+                    <span class="navbar-text">
+                        Chào <strong>@firstName</strong>
+                    </span>
+                    @if (Session["avatar"] != null && Session["avatar"].ToString() != "")
+                    {
+                        <img src="@avatar" alt="Avatar Logo" style="width:40px;" class="rounded-pill m-1">
+                    }
+                </span>
+            }
+        </div>
+    </nav>
+    
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3>Clinic MS</h3>
+                    <p>Clinic MS là một hệ thống quản lý phòng khám hiện đại, cung cấp các dịch vụ y tế chất lượng và tiện lợi cho bệnh nhân.</p>
+                </div>
+                <div class="footer-section links">
+                    <h3>Liên Kết</h3>
+                    <ul>
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="/Home/About">Giới thiệu</a></li>
+                        <li><a href="/Admin/Services">Dịch vụ</a></li>
+                        <li><a href="/Home/Contact">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Liên Hệ</h3>
+                    <p>Địa chỉ: 123 Đường ABC, Quận XYZ, Thành phố HCM</p>
+                    <p>Điện thoại: (012) 345-6789</p>
+                    <p>Email: contact@clinicms.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Clinic MS | Thiết kế bởi <a href="/Home/About">Nhóm Phát Triển</a>
+            </div>
+        </div>
+    </footer>
+    
+    <style>
+        .footer {
+            background-color: #f8f9fa;
+            color: #343a40;
+            padding: 20px 0;
+            border-top: 1px solid #e7e7e7;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1170px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin: 10px 0;
+        }
+
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .footer-section p,
+        .footer-section ul,
+        .footer-section li,
+        .footer-section a {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #343a40;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #007bff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 10px 0;
+            border-top: 1px solid #e7e7e7;
+            margin-top: 20px;
+        }
+
+        .footer-bottom a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

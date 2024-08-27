@@ -1,0 +1,92 @@
+﻿@model ClinicWeb.Models.InvoiceViewModel
+@{
+    ViewBag.Title = "ExportInvoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="invoice-details">
+    <table style="width: 100%;">
+        <tr>
+            <td style="vertical-align: top; width: 50%;">
+                <div class="invoice-header">
+                    <h2 class="invoice-title">Hóa đơn</h2>
+                    <p class="invoice-id">Mã hóa đơn: @Model.Id</p>
+                </div>
+            </td>
+            <td style="vertical-align: top; width: 50%;">
+                <div class="patient-info">
+                    <h3 class="patient-title">Thông tin bệnh nhân</h3>
+                    <p class="patient-id">Mã bệnh nhân: @Model.PatientId</p>
+                    <p class="patient-name">Họ tên: @Model.PatientFirstName @Model.PatientLastName</p>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="container mb-5">
+    <h4>Chi tiết hóa đơn thuốc:</h4>
+    <table class="table">
+        <tr>
+            <th>Tên thuốc</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+
+        @{
+            decimal sum1 = 0;
+            decimal sum2 = 0;
+        }
+        @foreach (var item in @Model.Medicines)
+        {
+            <tr>
+                <td>@item.MedicineName</td>
+                <td>@item.Price VND</td>
+                <td>@item.Quantity</td>
+                @{
+                    var price1 = item.Price * item.Quantity;
+                    sum1 = sum1 + price1;
+                }
+                <td>@price1 VND</td>
+            </tr>
+        }
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Tổng: @sum1 VND</th>
+        </tr>
+    </table>
+
+
+
+    <h4>Dịch vụ sử dụng:</h4>
+    <table class="table">
+        <tr>
+            <th>Dịch vụ</th>
+            <th>Chi phí</th>
+            <th>Số lần</th>
+            <th>Thành tiền</th>
+        </tr>
+        <tr>
+            <td>@Model.ServiceName</td>
+            <td>@Model.ServicePrice</td>
+            <td>@Model.ServiceQuantity</td>
+            @{
+                var price2 = Model.ServicePrice * Model.ServiceQuantity;
+                sum2 = sum2 + price2;
+            }
+            <td>@price2 VND</td>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Tổng: @sum2 VND</th>
+        </tr>
+    </table>
+
+    <h3>Tổng hóa đơn: @Model.TotalAmount VND</h3>
+
+</div>

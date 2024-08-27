@@ -1,0 +1,60 @@
+﻿@model ClinicWeb.Models.DoctorViewModel
+
+@{
+    ViewBag.Title = "Thêm bác sĩ";
+}
+
+<h1 class="text-center">THÊM THÔNG TIN</h1>
+
+@using (Html.BeginForm("AddDoctor", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Nhập họ" })
+        <label for="last_name">Họ</label>
+    </div>
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "Nhập tên" })
+        <label for="first_name">Tên</label>
+    </div>
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.Gender, new { @class = "form-control", placeholder = "Nhập giới tính" })
+        <label for="gender">Giới tính</label>
+    </div>
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(model => model.DateOfBirth, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", placeholder = "Chọn ngày sinh" })
+        <label for="date_of_birth">Ngày sinh</label>
+    </div>
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Nhập địa chỉ" })
+        <label for="address">Địa chỉ</label>
+    </div>
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
+        <label for="phone">Số điện thoại</label>
+    </div>
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.Specialty, new { @class = "form-control", placeholder = "Nhập chuyên khoa" })
+        <label for="specialty">Chuyên khoa</label>
+    </div>
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Nhập tên người dùng" })
+        <label for="username">Tên người dùng</label>
+    </div>
+
+    <div class="form-floating mt-3 mb-3">
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+        <label for="password">Mật khẩu</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-3">Thêm</button>
+}
+

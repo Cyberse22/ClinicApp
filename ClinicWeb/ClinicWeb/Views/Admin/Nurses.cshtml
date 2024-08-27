@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ClinicWeb.App_Data.Nurse>
+
+@{
+    ViewBag.Title = "Danh sách y tá";
+}
+
+<h1 class="text-center m-3">DANH SÁCH Y TÁ</h1>
+
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-md-10">
+            @using (Html.BeginForm("Nurses", "Admin", FormMethod.Get))
+            {
+                <div class="input-group">
+                    <input class="form-control me-2" type="text" placeholder="Tìm kiếm y tá" name="kw">
+                    <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                </div>
+            }
+        </div>
+        <div class="col-md-2 text-end">
+            <a class="btn btn-success" href="@Url.Action("AddNurse", "Admin")">Thêm y tá</a>
+        </div>
+    </div>
+</div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Họ</th>
+            <th>Tên</th>
+            <th>Giới tính</th>
+            <th>Ngày sinh</th>
+            <th>Địa chỉ</th>
+            <th>Số điện thoại</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var nurse in Model)
+        {
+            <tr>
+                <td>@nurse.id</td>
+                <td>@nurse.UserInfo.last_name</td>
+                <td>@nurse.UserInfo.first_name</td>
+                <td>@nurse.UserInfo.gender</td>
+                <td>@nurse.UserInfo.date_of_birth.Value.ToString("dd/MM/yyyy")</td>
+                <td>@nurse.UserInfo.address</td>
+                <td>@nurse.UserInfo.phone</td>
+                <td>
+                    <a class="btn btn-info" href="@Url.Action("EditNurse", "Admin", new { id = nurse.id })">Cập nhật</a>
+                    <a class="btn btn-danger" href="@Url.Action("DeleteNurse", "Admin", new { id = nurse.id })">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

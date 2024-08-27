@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Liên hệ";
+}
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4">@ViewBag.Title</h1>
+        <p class="lead">Chúng tôi rất mong được nghe từ bạn. Vui lòng điền vào mẫu dưới đây và chúng tôi sẽ liên hệ lại sớm nhất có thể.</p>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <form>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="name" placeholder="Nhập tên của bạn">
+                    <label for="name">Tên của bạn</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="email" class="form-control" id="email" placeholder="Nhập email của bạn">
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="subject" placeholder="Chủ đề">
+                    <label for="subject">Chủ đề</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <textarea class="form-control" id="message" rows="5" placeholder="Nhập lời nhắn của bạn"></textarea>
+                    <label for="message">Lời nhắn</label>
+                </div>
+                <button type="submit" class="btn btn-primary mb-3">Gửi</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h2>Thông tin liên hệ</h2>
+            <ul class="list-unstyled">
+                <li><i class="fas fa-map-marker-alt"></i> Địa chỉ: 123 Đường ABC, Quận 1, TP. HCM</li>
+                <li><i class="fas fa-phone"></i> Điện thoại: (84) 123 456 789</li>
+                <li><i class="fas fa-envelope"></i> Email: info@clinicweb.com</li>
+            </ul>
+            <h2 class="mt-4">Giờ làm việc</h2>
+            <ul class="list-unstyled">
+                <li>Thứ Hai - Thứ Sáu: 8:00 AM - 6:00 PM</li>
+                <li>Thứ Bảy: 9:00 AM - 1:00 PM</li>
+                <li>Chủ Nhật: Nghỉ</li>
+            </ul>
+        </div>
+    </div>
+</div>

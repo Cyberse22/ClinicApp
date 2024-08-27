@@ -1,0 +1,39 @@
+﻿@model ClinicWeb.Models.MyLoginViewModel
+
+@{
+    ViewBag.Title = "Đăng nhập";
+}
+
+<h1 class="text-center text-danger mt-3">ĐĂNG NHẬP</h1>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
+@using (Html.BeginForm("Login", "MyAccount", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <label class="mb-1">Chọn vai trò của bạn:</label>
+    <select class="form-select" name="Role">
+        <option value="admin">Người quản trị</option>
+        <option value="doctor">Bác sĩ</option>
+        <option value="nurse">Y tá</option>
+        <option value="patient">Bệnh nhân</option>
+    </select>
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Nhập tên người dùng" })
+        <label for="username">Tên người dùng</label>
+    </div>
+
+    <div class="form-floating mt-3 mb-3">
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+        <label for="password">Mật khẩu</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-3">Đăng nhập</button>
+}
+
+

@@ -1,0 +1,88 @@
+﻿@model ClinicWeb.Models.AppointmenViewModel
+@{
+    ViewBag.Title = "Đặt lịch khám";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1 class="text-center">Tạo lịch khám</h1>
+
+<div class="container">
+
+    @using (Html.BeginForm("AddAppointment", "Nurse", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <h3>Thông tin bệnh nhân:</h3>
+        <div class="mb-3 mt-3">
+            <label for="last_name" class="form-label">Họ:</label>
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Nhập họ" })
+
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="first_name" class="form-label">Tên:</label>
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "Nhập tên" })
+        </div>
+        <div class="mb-3 mt-3">
+            <label class="form-label">Giới tính:</label>
+            <div class="d-flex align-items-center">
+                <div class="form-check me-3">
+                    @Html.RadioButtonFor(m => m.Gender, "Nam", new { @class = "form-check-input", id = "genderMale" })
+                    <label class="form-check-label" for="genderMale">Nam</label>
+                </div>
+                <div class="form-check">
+                    @Html.RadioButtonFor(m => m.Gender, "Nữ", new { @class = "form-check-input", id = "genderFemale" })
+                    <label class="form-check-label" for="genderFemale">Nữ</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label for="dob" class="form-label">Ngày sinh:</label>
+            @Html.TextBoxFor(m => m.dob, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", placeholder = "Nhập ngày sinh" })
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label for="address" class="form-label">Địa chỉ:</label>
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Nhập địa chỉ" })
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label for="phone_number" class="form-label">Số điện thoại:</label>
+            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", type = "number", placeholder = "Nhập số điện thoại" })
+        </div>
+        <h3>Thông tin về lịch khám:</h3>
+        <div class="mb-3 mt-3">
+            <label for="reason" class="form-label">Triệu chứng của bệnh nhân:</label>
+            @Html.TextBoxFor(m => m.reason, new { @class = "form-control", placeholder = "Triệu chứng của bệnh nhân" })
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="date" class="form-label">Chọn ngày khám:</label>
+            @Html.TextBoxFor(m => m.date, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", placeholder = "Chọn ngày khám" })
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="time" class="form-label">Vào lúc:</label>
+            @Html.TextBoxFor(m => m.time, new { @class = "form-control", type = "time", placeholder = "Thời gian khám" })
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Chọn bác sĩ:</label>
+
+            @{
+                List<SelectListItem> doctorList = new List<SelectListItem>();
+
+                foreach (var doctor in ViewBag.Doctors)
+                {
+                    doctorList.Add(new SelectListItem
+                    {
+                        Text = $"{doctor.UserInfo.last_name} {doctor.UserInfo.first_name}",
+                        Value = doctor.id.ToString()
+                    });
+                }
+            }
+            @Html.DropDownListFor(m => m.DoctorId, doctorList, new { @class = "form-select" })
+        </div>
+
+
+        <button type="submit" class="btn btn-primary mb-5">Xác nhận</button>
+                }
+</div>

@@ -1,0 +1,25 @@
+﻿@model ClinicWeb.App_Data.Medicine
+
+@{
+    ViewBag.Title = "Cập nhật thông tin thuốc";
+}
+
+<h1 class="text-center m-3">CẬP NHẬT THÔNG TIN</h1>
+
+@using (Html.BeginForm("EditMedicine", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.id)
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "Nhập tên thuốc" })
+        <label for="name">Tên thuốc</label>
+    </div>
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.unit_price, new { @class = "form-control", placeholder = "Nhập giá tiền" })
+        <label for="unit_price">Giá tiền</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-3">Lưu</button>
+}

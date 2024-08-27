@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9e4a677ac2c449a3af1314ebe87d1391" Name="Diagram1">
+        <EntityTypeShape EntityType="QLPKModel.Account" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Admin" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Appointment" Width="1.5" PointX="7.5" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Doctor" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Invoice" Width="1.5" PointX="9.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Invoice_Medicine" Width="1.5" PointX="15" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Invoice_Service" Width="1.5" PointX="12" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Medicine" Width="1.5" PointX="12.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Nurse" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Patient" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Prescription" Width="1.5" PointX="12.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Prescription_Detail" Width="1.5" PointX="18" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.Service" Width="1.5" PointX="9.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLPKModel.UserInfo" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <AssociationConnector Association="QLPKModel.FK__UserInfo__active__0662F0A3" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Admin__info_id__0A338187" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Appointme__docto__1C5231C2" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Appointme__nurse__1B5E0D89" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Appointme__patie__1A69E950" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Invoice__appoint__2D7CBDC4" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Prescript__appoi__23F3538A" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Doctor__info_id__0E04126B" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Prescript__docto__22FF2F51" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Invoice__nurse_i__2F650636" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Invoice__prescri__2E70E1FD" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Invoice_M__invoi__324172E1" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Invoice_S__invoi__361203C5" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Invoice_M__medic__3335971A" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Invoice_S__servi__370627FE" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Prescript__medic__27C3E46E" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Nurse__info_id__11D4A34F" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Patient__info_id__15A53433" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Prescript__patie__220B0B18" ManuallyRouted="false" />
+        <AssociationConnector Association="QLPKModel.FK__Prescript__presc__26CFC035" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

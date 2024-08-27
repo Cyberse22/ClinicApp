@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ClinicWeb.App_Data.Service>
+
+@{
+    ViewBag.Title = "Danh sách dịch vụ";
+}
+
+<h1 class="text-center m-3">DANH SÁCH DỊCH VỤ</h1>
+
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-md-10">
+            @using (Html.BeginForm("Services", "Admin", FormMethod.Get))
+            {
+                <div class="input-group">
+                    <input class="form-control me-2" type="text" placeholder="Tìm kiếm dịch vụ" name="kw">
+                    <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                </div>
+            }
+        </div>
+        <div class="col-md-2 text-end">
+            <a class="btn btn-success" href="@Url.Action("AddServices", "Admin")">Thêm dịch vụ</a>
+        </div>
+    </div>
+</div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Tên</th>
+            <th>Giá tiền</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>@service.id</td>
+                <td>@service.name</td>
+                <td>@string.Format("{0:N0}", service.unit_price) VNĐ</td>
+                <td>
+                    <a class="btn btn-info" href="@Url.Action("EditService", "Admin", new { id = service.id })">Cập nhật</a>
+                    <a class="btn btn-danger" href="@Url.Action("DeleteService", "Admin", new { id = service.id })">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

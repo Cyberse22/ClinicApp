@@ -1,0 +1,101 @@
+﻿@model ClinicWeb.Models.PrescriptionViewModel
+
+@{
+    ViewBag.Title = "Tạo toa thuốc";
+}
+
+<h1 class="text-center mt-5 mb-4">TẠO TOA THUỐC</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Thông Tin Lịch Khám</h3>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(model => model.AppointmentId, new { @class = "form-control", placeholder = "ID Cuộc hẹn" })
+                        <label for="AppointmentId">ID Cuộc hẹn</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(model => model.PatientId, new { @class = "form-control", placeholder = "ID Bệnh nhân" })
+                        <label for="PatientId">ID Bệnh nhân</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(model => model.PatientName, new { @class = "form-control", placeholder = "Tên Bệnh nhân" })
+                        <label for="PatientName">Tên Bệnh nhân</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(model => model.AppointmentDate, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "Ngày", id = "AppointmentDate" })
+                        <label for="AppointmentDate">Ngày</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(model => model.AppointmentTime, new { @class = "form-control", placeholder = "Giờ" })
+                        <label for="AppointmentTime">Giờ</label>
+                    </div>
+
+                    @using (Html.BeginForm("PrescribeMedication", "Doctor", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(model => model.AppointmentId)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Conclusion, "Kết Luận")
+                            @Html.TextAreaFor(model => model.Conclusion, new { @class = "form-control", rows = "3" })
+                            @Html.ValidationMessageFor(model => model.Conclusion, "", new { @class = "text-danger" })
+                        </div>
+
+                        <h3 class="card-title">Danh Sách Thuốc</h3>
+
+                        <div id="medicationFields">
+                            @for (int i = 0; i < Model.PrescriptionDetails.Count; i++)
+                            {
+                                <div class="medicationField">
+                                    <div class="form-floating mb-3">
+                                        @Html.TextBoxFor(model => model.PrescriptionDetails[i].MedicineId, new { @class = "form-control", placeholder = "ID Thuốc" })
+                                        @Html.LabelFor(model => model.PrescriptionDetails[i].MedicineId, "ID Thuốc")
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        @Html.TextBoxFor(model => model.PrescriptionDetails[i].Quantity, new { @class = "form-control", placeholder = "Số Lượng" })
+                                        @Html.LabelFor(model => model.PrescriptionDetails[i].Quantity, "Số Lượng")
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div id="newMedicationFields"></div>
+                        <div class="text-center mt-3">
+                            <button type="button" id="addMedicationBtn" class="btn btn-primary">Thêm Thuốc</button>
+                            <button type="submit" class="btn btn-primary ml-2">Kê Đơn</button>
+                            <a href="@Url.Action("AppointmentDetail", "Doctor", new { id = Model.AppointmentId })" class="btn btn-secondary ml-2">Quay lại</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        $('#addMedicationBtn').click(function () {
+            var html = '<div class="medicationField">';
+            html += '<div class="form-floating mb-3">';
+            html += '<select class="form-control medication-select" name="PrescriptionDetails[' + $('.medicationField').length + '].MedicineId">';
+            html += '<option value="">Chọn thuốc</option>';
+            @foreach (var medicine in Model.Medicines)
+            {
+                <text>
+                    html += '<option value="@medicine.id">@medicine.name</option>';
+                </text>
+            }
+            html += '</select>';
+            html += '<label for="SelectedMedicineId">Thuốc</label>';
+            html += '</div>';
+            html += '<div class="form-floating mb-3">';
+            html += '<input type="number" class="form-control quantity-input" name="PrescriptionDetails[' + $('.medicationField').length + '].Quantity" placeholder="Số Lượng" />';
+            html += '<label for="Quantity">Số Lượng</label>';
+            html += '</div>';
+            html += '</div>';
+
+            $('#newMedicationFields').append(html);
+        });
+    })();
+</script>

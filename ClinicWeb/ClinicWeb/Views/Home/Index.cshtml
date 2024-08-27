@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Trang chủ";
+}
+
+<div class="jumbotron text-center mb-3">
+    <h1 class="display-4">Chào mừng đến với ClinicWeb!</h1>
+    <p class="lead">Hệ thống quản lý phòng khám hiện đại và tiện lợi.</p>
+    <hr class="my-4">
+    <p>Khám phá các tính năng và dịch vụ của chúng tôi.</p>
+    <a class="btn btn-primary btn-lg" href="/Home/About" role="button">Tìm hiểu thêm</a>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <img src="https://www.w3schools.com/bootstrap5/img_avatar1.png" class="card-img-top" alt="Doctors">
+            <div class="card-body">
+                <h5 class="card-title">Bác sĩ</h5>
+                <p class="card-text">Quản lý thông tin của bác sĩ.</p>
+                <a href="@Url.Action("Doctors", "Admin")" class="btn btn-outline-primary">Quản lý Bác sĩ</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <img src="https://www.w3schools.com/bootstrap5/img_avatar1.png" class="card-img-top" alt="Nurses">
+            <div class="card-body">
+                <h5 class="card-title">Y tá</h5>
+                <p class="card-text">Quản lý thông tin của y tá.</p>
+                <a href="@Url.Action("Nurses", "Admin")" class="btn btn-outline-primary">Quản lý Y tá</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <img src="https://www.w3schools.com/bootstrap5/img_avatar1.png" class="card-img-top" alt="Services">
+            <div class="card-body">
+                <h5 class="card-title">Dịch vụ</h5>
+                <p class="card-text">Quản lý các dịch vụ y tế và chăm sóc sức khỏe.</p>
+                <a href="@Url.Action("Services", "Admin")" class="btn btn-outline-primary">Quản lý Dịch vụ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <img src="https://www.w3schools.com/bootstrap5/img_avatar1.png" class="card-img-top" alt="Appointments">
+            <div class="card-body">
+                <h5 class="card-title">Cuộc hẹn</h5>
+                <p class="card-text">Quản lý các cuộc hẹn với bệnh nhân.</p>
+                <a href="" class="btn btn-outline-primary">Coming soon</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <img src="https://www.w3schools.com/bootstrap5/img_avatar1.png" class="card-img-top" alt="Prescriptions">
+            <div class="card-body">
+                <h5 class="card-title">Toa thuốc</h5>
+                <p class="card-text">Quản lý toa thuốc và đơn thuốc.</p>
+                <a href="" class="btn btn-outline-primary">Coming soon</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <img src="https://www.w3schools.com/bootstrap5/img_avatar1.png" class="card-img-top" alt="Medicines">
+            <div class="card-body">
+                <h5 class="card-title">Thuốc</h5>
+                <p class="card-text">Quản lý thông tin và giá thuốc.</p>
+                <a href="@Url.Action("Medicines", "Admin")" class="btn btn-outline-primary">Quản lý Thuốc</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+﻿@model ClinicWeb.Models.MedicineViewModel
+
+@{
+    ViewBag.Title = "Thêm thuốc";
+}
+
+<h1 class="text-center m-3">THÊM THUỐC MỚI</h1>
+
+@using (Html.BeginForm("AddMedicine", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Nhập tên thuốc" })
+        <label for="name">Tên thuốc</label>
+    </div>
+
+    <div class="form-floating mb-3 mt-3">
+        @Html.TextBoxFor(m => m.UnitPrice, new { @class = "form-control", placeholder = "Nhập giá tiền" })
+        <label for="unit_price">Giá tiền</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-3">Thêm</button>
+}
+

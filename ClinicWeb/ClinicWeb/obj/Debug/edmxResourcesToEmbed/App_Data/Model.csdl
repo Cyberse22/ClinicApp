@@ -1,0 +1,522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLPKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="avatar" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="user_role" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="UserInfo" Relationship="Self.FK__UserInfo__active__0662F0A3" FromRole="Account" ToRole="UserInfo" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="info_id" Type="Int32" Nullable="false" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="UserInfo" Relationship="Self.FK__Admin__info_id__0A338187" FromRole="Admin" ToRole="UserInfo" />
+  </EntityType>
+  <EntityType Name="Appointment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="patient_id" Type="Int32" />
+    <Property Name="nurse_id" Type="Int32" />
+    <Property Name="doctor_id" Type="Int32" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="time" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__Appointme__docto__1C5231C2" FromRole="Appointment" ToRole="Doctor" />
+    <NavigationProperty Name="Nurse" Relationship="Self.FK__Appointme__nurse__1B5E0D89" FromRole="Appointment" ToRole="Nurse" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__Appointme__patie__1A69E950" FromRole="Appointment" ToRole="Patient" />
+    <NavigationProperty Name="Invoice" Relationship="Self.FK__Invoice__appoint__2D7CBDC4" FromRole="Appointment" ToRole="Invoice" />
+    <NavigationProperty Name="Prescription" Relationship="Self.FK__Prescript__appoi__23F3538A" FromRole="Appointment" ToRole="Prescription" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="info_id" Type="Int32" Nullable="false" />
+    <Property Name="specialty" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Appointment" Relationship="Self.FK__Appointme__docto__1C5231C2" FromRole="Doctor" ToRole="Appointment" />
+    <NavigationProperty Name="UserInfo" Relationship="Self.FK__Doctor__info_id__0E04126B" FromRole="Doctor" ToRole="UserInfo" />
+    <NavigationProperty Name="Prescription" Relationship="Self.FK__Prescript__docto__22FF2F51" FromRole="Doctor" ToRole="Prescription" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="appointment_id" Type="Int32" />
+    <Property Name="prescription_id" Type="Int32" />
+    <Property Name="patient_id" Type="Int32" />
+    <Property Name="nurse_id" Type="Int32" Nullable="false" />
+    <Property Name="total_amount" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="created_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Appointment" Relationship="Self.FK__Invoice__appoint__2D7CBDC4" FromRole="Invoice" ToRole="Appointment" />
+    <NavigationProperty Name="Nurse" Relationship="Self.FK__Invoice__nurse_i__2F650636" FromRole="Invoice" ToRole="Nurse" />
+    <NavigationProperty Name="Prescription" Relationship="Self.FK__Invoice__prescri__2E70E1FD" FromRole="Invoice" ToRole="Prescription" />
+    <NavigationProperty Name="Invoice_Medicine" Relationship="Self.FK__Invoice_M__invoi__324172E1" FromRole="Invoice" ToRole="Invoice_Medicine" />
+    <NavigationProperty Name="Invoice_Service" Relationship="Self.FK__Invoice_S__invoi__361203C5" FromRole="Invoice" ToRole="Invoice_Service" />
+  </EntityType>
+  <EntityType Name="Invoice_Medicine">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="invoice_id" Type="Int32" />
+    <Property Name="medicine_id" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+    <Property Name="unit_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="discount" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="Invoice" Relationship="Self.FK__Invoice_M__invoi__324172E1" FromRole="Invoice_Medicine" ToRole="Invoice" />
+    <NavigationProperty Name="Medicine" Relationship="Self.FK__Invoice_M__medic__3335971A" FromRole="Invoice_Medicine" ToRole="Medicine" />
+  </EntityType>
+  <EntityType Name="Invoice_Service">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="invoice_id" Type="Int32" />
+    <Property Name="service_id" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+    <Property Name="unit_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="discount" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="Invoice" Relationship="Self.FK__Invoice_S__invoi__361203C5" FromRole="Invoice_Service" ToRole="Invoice" />
+    <NavigationProperty Name="Service" Relationship="Self.FK__Invoice_S__servi__370627FE" FromRole="Invoice_Service" ToRole="Service" />
+  </EntityType>
+  <EntityType Name="Medicine">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="unit_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Invoice_Medicine" Relationship="Self.FK__Invoice_M__medic__3335971A" FromRole="Medicine" ToRole="Invoice_Medicine" />
+    <NavigationProperty Name="Prescription_Detail" Relationship="Self.FK__Prescript__medic__27C3E46E" FromRole="Medicine" ToRole="Prescription_Detail" />
+  </EntityType>
+  <EntityType Name="Nurse">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="info_id" Type="Int32" Nullable="false" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Appointment" Relationship="Self.FK__Appointme__nurse__1B5E0D89" FromRole="Nurse" ToRole="Appointment" />
+    <NavigationProperty Name="Invoice" Relationship="Self.FK__Invoice__nurse_i__2F650636" FromRole="Nurse" ToRole="Invoice" />
+    <NavigationProperty Name="UserInfo" Relationship="Self.FK__Nurse__info_id__11D4A34F" FromRole="Nurse" ToRole="UserInfo" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="info_id" Type="Int32" Nullable="false" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Appointment" Relationship="Self.FK__Appointme__patie__1A69E950" FromRole="Patient" ToRole="Appointment" />
+    <NavigationProperty Name="UserInfo" Relationship="Self.FK__Patient__info_id__15A53433" FromRole="Patient" ToRole="UserInfo" />
+    <NavigationProperty Name="Prescription" Relationship="Self.FK__Prescript__patie__220B0B18" FromRole="Patient" ToRole="Prescription" />
+  </EntityType>
+  <EntityType Name="Prescription">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="patient_id" Type="Int32" />
+    <Property Name="doctor_id" Type="Int32" />
+    <Property Name="appointment_id" Type="Int32" />
+    <Property Name="conclusion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="created_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Appointment" Relationship="Self.FK__Prescript__appoi__23F3538A" FromRole="Prescription" ToRole="Appointment" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__Prescript__docto__22FF2F51" FromRole="Prescription" ToRole="Doctor" />
+    <NavigationProperty Name="Invoice" Relationship="Self.FK__Invoice__prescri__2E70E1FD" FromRole="Prescription" ToRole="Invoice" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__Prescript__patie__220B0B18" FromRole="Prescription" ToRole="Patient" />
+    <NavigationProperty Name="Prescription_Detail" Relationship="Self.FK__Prescript__presc__26CFC035" FromRole="Prescription" ToRole="Prescription_Detail" />
+  </EntityType>
+  <EntityType Name="Prescription_Detail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="prescription_id" Type="Int32" />
+    <Property Name="medicine_id" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+    <NavigationProperty Name="Medicine" Relationship="Self.FK__Prescript__medic__27C3E46E" FromRole="Prescription_Detail" ToRole="Medicine" />
+    <NavigationProperty Name="Prescription" Relationship="Self.FK__Prescript__presc__26CFC035" FromRole="Prescription_Detail" ToRole="Prescription" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="unit_price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Invoice_Service" Relationship="Self.FK__Invoice_S__servi__370627FE" FromRole="Service" ToRole="Invoice_Service" />
+  </EntityType>
+  <EntityType Name="UserInfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="first_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="date_of_birth" Type="DateTime" Precision="0" />
+    <Property Name="address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="account_id" Type="Int32" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="Self.FK__UserInfo__active__0662F0A3" FromRole="UserInfo" ToRole="Account" />
+    <NavigationProperty Name="Admin" Relationship="Self.FK__Admin__info_id__0A338187" FromRole="UserInfo" ToRole="Admin" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__Doctor__info_id__0E04126B" FromRole="UserInfo" ToRole="Doctor" />
+    <NavigationProperty Name="Nurse" Relationship="Self.FK__Nurse__info_id__11D4A34F" FromRole="UserInfo" ToRole="Nurse" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__Patient__info_id__15A53433" FromRole="UserInfo" ToRole="Patient" />
+  </EntityType>
+  <Association Name="FK__UserInfo__active__0662F0A3">
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="UserInfo">
+        <PropertyRef Name="account_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Admin__info_id__0A338187">
+    <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+    <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="info_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Appointme__docto__1C5231C2">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="doctor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Appointme__nurse__1B5E0D89">
+    <End Role="Nurse" Type="Self.Nurse" Multiplicity="0..1" />
+    <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nurse">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="nurse_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Appointme__patie__1A69E950">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Appointment">
+        <PropertyRef Name="patient_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoice__appoint__2D7CBDC4">
+    <End Role="Appointment" Type="Self.Appointment" Multiplicity="0..1" />
+    <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Appointment">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="appointment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Prescript__appoi__23F3538A">
+    <End Role="Appointment" Type="Self.Appointment" Multiplicity="0..1" />
+    <End Role="Prescription" Type="Self.Prescription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Appointment">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Prescription">
+        <PropertyRef Name="appointment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Doctor__info_id__0E04126B">
+    <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="info_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Prescript__docto__22FF2F51">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Prescription" Type="Self.Prescription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Prescription">
+        <PropertyRef Name="doctor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoice__nurse_i__2F650636">
+    <End Role="Nurse" Type="Self.Nurse" Multiplicity="1" />
+    <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nurse">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="nurse_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoice__prescri__2E70E1FD">
+    <End Role="Prescription" Type="Self.Prescription" Multiplicity="0..1" />
+    <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prescription">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="prescription_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoice_M__invoi__324172E1">
+    <End Role="Invoice" Type="Self.Invoice" Multiplicity="0..1" />
+    <End Role="Invoice_Medicine" Type="Self.Invoice_Medicine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoice">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Invoice_Medicine">
+        <PropertyRef Name="invoice_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoice_S__invoi__361203C5">
+    <End Role="Invoice" Type="Self.Invoice" Multiplicity="0..1" />
+    <End Role="Invoice_Service" Type="Self.Invoice_Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoice">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Invoice_Service">
+        <PropertyRef Name="invoice_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoice_M__medic__3335971A">
+    <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1" />
+    <End Role="Invoice_Medicine" Type="Self.Invoice_Medicine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicine">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Invoice_Medicine">
+        <PropertyRef Name="medicine_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoice_S__servi__370627FE">
+    <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+    <End Role="Invoice_Service" Type="Self.Invoice_Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Invoice_Service">
+        <PropertyRef Name="service_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Prescript__medic__27C3E46E">
+    <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1" />
+    <End Role="Prescription_Detail" Type="Self.Prescription_Detail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicine">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Prescription_Detail">
+        <PropertyRef Name="medicine_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Nurse__info_id__11D4A34F">
+    <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+    <End Role="Nurse" Type="Self.Nurse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Nurse">
+        <PropertyRef Name="info_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Patient__info_id__15A53433">
+    <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="info_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Prescript__patie__220B0B18">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Prescription" Type="Self.Prescription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Prescription">
+        <PropertyRef Name="patient_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Prescript__presc__26CFC035">
+    <End Role="Prescription" Type="Self.Prescription" Multiplicity="0..1" />
+    <End Role="Prescription_Detail" Type="Self.Prescription_Detail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prescription">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Prescription_Detail">
+        <PropertyRef Name="prescription_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLPKEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Account" EntityType="Self.Account" />
+    <EntitySet Name="Admin" EntityType="Self.Admin" />
+    <EntitySet Name="Appointment" EntityType="Self.Appointment" />
+    <EntitySet Name="Doctor" EntityType="Self.Doctor" />
+    <EntitySet Name="Invoice" EntityType="Self.Invoice" />
+    <EntitySet Name="Invoice_Medicine" EntityType="Self.Invoice_Medicine" />
+    <EntitySet Name="Invoice_Service" EntityType="Self.Invoice_Service" />
+    <EntitySet Name="Medicine" EntityType="Self.Medicine" />
+    <EntitySet Name="Nurse" EntityType="Self.Nurse" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" />
+    <EntitySet Name="Prescription" EntityType="Self.Prescription" />
+    <EntitySet Name="Prescription_Detail" EntityType="Self.Prescription_Detail" />
+    <EntitySet Name="Service" EntityType="Self.Service" />
+    <EntitySet Name="UserInfo" EntityType="Self.UserInfo" />
+    <AssociationSet Name="FK__UserInfo__active__0662F0A3" Association="Self.FK__UserInfo__active__0662F0A3">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="UserInfo" EntitySet="UserInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Admin__info_id__0A338187" Association="Self.FK__Admin__info_id__0A338187">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="Admin" EntitySet="Admin" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Appointme__docto__1C5231C2" Association="Self.FK__Appointme__docto__1C5231C2">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Appointment" EntitySet="Appointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Appointme__nurse__1B5E0D89" Association="Self.FK__Appointme__nurse__1B5E0D89">
+      <End Role="Nurse" EntitySet="Nurse" />
+      <End Role="Appointment" EntitySet="Appointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Appointme__patie__1A69E950" Association="Self.FK__Appointme__patie__1A69E950">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Appointment" EntitySet="Appointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoice__appoint__2D7CBDC4" Association="Self.FK__Invoice__appoint__2D7CBDC4">
+      <End Role="Appointment" EntitySet="Appointment" />
+      <End Role="Invoice" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Prescript__appoi__23F3538A" Association="Self.FK__Prescript__appoi__23F3538A">
+      <End Role="Appointment" EntitySet="Appointment" />
+      <End Role="Prescription" EntitySet="Prescription" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Doctor__info_id__0E04126B" Association="Self.FK__Doctor__info_id__0E04126B">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="Doctor" EntitySet="Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Prescript__docto__22FF2F51" Association="Self.FK__Prescript__docto__22FF2F51">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Prescription" EntitySet="Prescription" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoice__nurse_i__2F650636" Association="Self.FK__Invoice__nurse_i__2F650636">
+      <End Role="Nurse" EntitySet="Nurse" />
+      <End Role="Invoice" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoice__prescri__2E70E1FD" Association="Self.FK__Invoice__prescri__2E70E1FD">
+      <End Role="Prescription" EntitySet="Prescription" />
+      <End Role="Invoice" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoice_M__invoi__324172E1" Association="Self.FK__Invoice_M__invoi__324172E1">
+      <End Role="Invoice" EntitySet="Invoice" />
+      <End Role="Invoice_Medicine" EntitySet="Invoice_Medicine" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoice_S__invoi__361203C5" Association="Self.FK__Invoice_S__invoi__361203C5">
+      <End Role="Invoice" EntitySet="Invoice" />
+      <End Role="Invoice_Service" EntitySet="Invoice_Service" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoice_M__medic__3335971A" Association="Self.FK__Invoice_M__medic__3335971A">
+      <End Role="Medicine" EntitySet="Medicine" />
+      <End Role="Invoice_Medicine" EntitySet="Invoice_Medicine" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoice_S__servi__370627FE" Association="Self.FK__Invoice_S__servi__370627FE">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="Invoice_Service" EntitySet="Invoice_Service" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Prescript__medic__27C3E46E" Association="Self.FK__Prescript__medic__27C3E46E">
+      <End Role="Medicine" EntitySet="Medicine" />
+      <End Role="Prescription_Detail" EntitySet="Prescription_Detail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Nurse__info_id__11D4A34F" Association="Self.FK__Nurse__info_id__11D4A34F">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="Nurse" EntitySet="Nurse" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Patient__info_id__15A53433" Association="Self.FK__Patient__info_id__15A53433">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Prescript__patie__220B0B18" Association="Self.FK__Prescript__patie__220B0B18">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Prescription" EntitySet="Prescription" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Prescript__presc__26CFC035" Association="Self.FK__Prescript__presc__26CFC035">
+      <End Role="Prescription" EntitySet="Prescription" />
+      <End Role="Prescription_Detail" EntitySet="Prescription_Detail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

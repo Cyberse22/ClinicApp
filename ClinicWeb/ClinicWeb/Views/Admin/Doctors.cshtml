@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ClinicWeb.App_Data.Doctor>
+
+@{
+    ViewBag.Title = "Danh sách bác sĩ";
+}
+
+<h1 class="text-center m-3">DANH SÁCH BÁC SĨ</h1>
+
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-md-10">
+            @using (Html.BeginForm("Doctors", "Admin", FormMethod.Get))
+            {
+                <div class="input-group">
+                    <input class="form-control me-2" type="text" placeholder="Tìm kiếm bác sĩ" name="kw">
+                    <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                </div>
+            }
+        </div>
+        <div class="col-md-2 text-end">
+            <a class="btn btn-success" href="@Url.Action("AddDoctor", "Admin")">Thêm bác sĩ</a>
+        </div>
+    </div>
+</div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Họ</th>
+            <th>Tên</th>
+            <th>Giới tính</th>
+            <th>Ngày sinh</th>
+            <th>Địa chỉ</th>
+            <th>Số điện thoại</th>
+            <th>Chuyên khoa</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var doctor in Model)
+        {
+            <tr>
+                <td>@doctor.id</td>
+                <td>@doctor.UserInfo.last_name</td>
+                <td>@doctor.UserInfo.first_name</td>
+                <td>@doctor.UserInfo.gender</td>
+                <td>@doctor.UserInfo.date_of_birth.Value.ToString("dd/MM/yyyy")</td>
+                <td>@doctor.UserInfo.address</td>
+                <td>@doctor.UserInfo.phone</td>
+                <td>@doctor.specialty</td>
+                <td>
+                    <a class="btn btn-info" href="@Url.Action("EditDoctor", "Admin", new { id = doctor.id })">Cập nhật</a>
+                    <a class="btn btn-danger" href="@Url.Action("DeleteDoctor", "Admin", new { id = doctor.id })">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

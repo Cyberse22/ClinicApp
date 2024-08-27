@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ClinicWeb.App_Data.Appointment>
+
+@{
+    ViewBag.Title = "Danh sách lịch khám";
+}
+
+<h1 class="text-center m-3">DANH SÁCH LỊCH KHÁM</h1>
+
+@using (Html.BeginForm("Appointments", "Doctor", FormMethod.Get))
+{
+    <div class="input-group mb-3">
+        <input class="form-control me-2" type="text" placeholder="Tìm kiếm bệnh nhân" name="kw">
+        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="date" id="datePicker" name="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")">
+        <label for="datePicker">Chọn ngày</label>
+        <button type="submit" class="btn btn-primary mt-2 mb-2">Lọc</button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Họ tên bệnh nhân</th>
+            <th>Ngày hẹn</th>
+            <th>Giờ hẹn</th>
+            <th>Lý do</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.id</td>
+                <td>@a.Patient.UserInfo.last_name @a.Patient.UserInfo.first_name</td>
+                <td>@a.date.ToString("dd/MM/yyyy")</td>
+                <td>@a.time</td>
+                <td>@a.reason</td>
+                <td>
+                    @switch (a.status)
+                    {
+                        case "scheduled":
+                            <span class="badge bg-primary">Đã đặt lịch</span>
+                            break;
+                        case "confirmed":
+                            <span class="badge bg-success">Đã xác nhận</span>
+                            break;
+                        case "cancelled":
+                            <span class="badge bg-danger">Đã hủy</span>
+                            break;
+                        case "completed":
+                            <span class="badge bg-secondary">Đã hoàn thành</span>
+                            break;
+                        default:
+                            <span class="badge bg-secondary">@a.status</span>
+                            break;
+                    }
+                </td>
+                <td>
+                    @if (a.status != "completed")
+                    {
+                        <a class="btn btn-primary" href="@Url.Action("AppointmentDetail", "Doctor", new { id = a.id })">Khám</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary" disabled>Khám</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

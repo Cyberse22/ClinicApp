@@ -1,0 +1,108 @@
+﻿@model ClinicWeb.Models.InvoiceViewModel
+
+@{
+    ViewBag.Title = "Xuất hóa đơn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="invoice-details">
+    <table style="width: 100%;">
+        <tr>
+            <td style="vertical-align: top; width: 50%;">
+                <div class="invoice-header">
+                    <h2 class="invoice-title">Hóa đơn</h2>
+                    <p class="invoice-id">Mã hóa đơn: @Model.Id</p>
+                </div>
+            </td>
+            <td style="vertical-align: top; width: 50%;">
+                <div class="patient-info">
+                    <h3 class="patient-title">Thông tin bệnh nhân</h3>
+                    <p class="patient-id">Mã bệnh nhân: @Model.PatientId</p>
+                    <p class="patient-name">Họ tên: @Model.PatientFirstName @Model.PatientLastName</p>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="container mb-5">
+    <h4>Chi tiết hóa đơn thuốc:</h4>
+    <table class="table">
+        <tr>
+            <th>Tên thuốc</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+
+        @{
+            decimal sum = 0;
+        }
+        @foreach (var item in @Model.Medicines)
+        {
+            <tr>
+                <td>@item.MedicineName</td>
+                <td>@item.Price VND</td>
+                <td>@item.Quantity</td>
+                @{
+
+                    var price = item.Price * item.Quantity;
+                    sum = sum + price;
+                    Model.MedicinePrice = sum;
+                }
+                <td>@price VND</td>
+            </tr>
+                    }
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Tổng: @sum VND</th>
+        </tr>
+    </table>
+
+    <h4>Dịch vụ sử dụng:</h4>
+
+    @using (Html.BeginForm("CreateInvoice", "Nurse", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.PatientId)
+        @Html.HiddenFor(m => m.AppointmentId)
+
+        @Html.AntiForgeryToken()
+        <div class="mb-3 mt-3">
+
+            @{
+                List<SelectListItem> servicesList = new List<SelectListItem>();
+
+                foreach (var s in ViewBag.Service)
+                {
+                    servicesList.Add(new SelectListItem
+                    {
+                        Text = $"{s.name}",
+                        Value = s.id.ToString()
+                    });
+                }
+            }
+            @Html.DropDownListFor(m => m.ServiceId, servicesList, new { @class = "form-select" })
+        </div>
+            <div class="mb-3 mt-3">
+                <label for="service_quantity" class="form-label">Số lần:</label>
+                @Html.TextBoxFor(m => m.ServiceQuantity, new { @class = "form-control", placeholder = "Số lần sử dụng dịch vụ", type = "number" })
+            </div>
+
+
+            <button class="btn btn-primary" href="/Nurse/CreateInvoice/" type="submit">Xuất hóa đơn</button>
+
+
+                }
+</div>
+
+
+
+
+
